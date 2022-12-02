@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,4 +14,14 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/',[PageController::class, 'home'])->name('home');
+
+Route::controller(PageController::class)->group(function () {
+    Route::get('/', 'home')->name('n-home');
+    Route::get('/admin/dashboard', 'dashboard')->name('dashboard');
+});
+Route::controller(AuthController::class)->group(function () {
+    Route::get('/user', 'user')->name('a-user');
+    Route::get('/user-create', 'createUser')->name('a-create');
+    Route::post('/user-create', 'userStore')->name('a-store');
+    Route::post('/user', 'userId')->name('a-userId');
+});
